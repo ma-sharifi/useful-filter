@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+    <!--====================================Appenders==========================================-->
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p]  [%-25.25t] [%-25.25c{1}:%-4L] [%-25.25M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="rootAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/root/root.log"/>
+        <param name="MaxFileSize" value="50000KB"/>
+        <param name="MaxBackupIndex" value="100"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-25.25c{1}:%-4L] [%-25.25M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="transactions" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/transaction/transaction.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-25.25c{1}:%-4L] [%-23.23M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="serviceTiming" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/timing/serviceTiming.log"/>
+        <!--d:/logs/Account_Balance/serviceTiming/serviceTiming.log"/>-->
+        <!-- value="/u01/Middleware/home/domains/MSF/logs/Account_Balance/timing/serviceTiming.log"/>-->
+        <param name="MaxFileSize" value="25000KB"/>
+        <param name="MaxBackupIndex" value="40"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <!--<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n"/>-->
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-25.25c{1}:%-4L] [%-23.23M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="health" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/health/health.log"/>
+        <param name="MaxFileSize" value="25000KB"/>
+        <param name="MaxBackupIndex" value="40"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-25.25c{1}:%-4L] [%-23.23M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="timeFileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/timing/statistics.log"/>
+        <param name="MaxFileSize" value="25000KB"/>
+        <param name="MaxBackupIndex" value="40"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="CoalescingStatistics" class="org.perf4j.log4j.AsyncCoalescingStatisticsAppender">
+        <param name="TimeSlice" value="60000"/>
+        <param name="QueueSize" value="200000"/>
+        <appender-ref ref="timeFileAppender"/>
+    </appender>
+
+    <appender name="stackTrace" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/stackTrace/stackTrace.log"/>
+        <param name="MaxFileSize" value="25000KB"/>
+        <param name="MaxBackupIndex" value="40"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-70.70t] [%-25.25c{1}:%-4L] [%-25.25M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="request" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="d:/log/useful-filters/filter/allow-per/request.log"/>
+        <param name="MaxFileSize" value="25000KB"/>
+        <param name="MaxBackupIndex" value="40"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%-5p] [%-25.25c{1}:%-4L] [%-23.23M] -> %m%n"/>
+        </layout>
+    </appender>
+
+    <!--====================================loggers============================================-->
+    <logger name="transactions" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="transactions"/>
+    </logger>
+
+
+    <logger name="stackTrace" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="stackTrace"/>
+
+    </logger>
+
+    <logger name="org.perf4j.TimingLogger" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="CoalescingStatistics"/>
+    </logger>
+
+    <logger name="serviceTiming" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="serviceTiming"/>
+    </logger>
+
+    <logger name="health" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="health"/>
+    </logger>
+
+    <logger name="request" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="request"/>
+    </logger>
+
+    <!--====================================Root============================================-->
+
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="rootAppender"/>
+    </root>
+
+
+</log4j:configuration>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application version="7" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd">
+  <display-name>C:\Users\me-sharifi\Documents\NetBeansProjects\useful-filters\useful-filters-ear</display-name>
+  <module>
+    <web>
+      <web-uri>useful-filters-web.war</web-uri>
+      <context-root>/v1</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>useful-filters-ejb.jar</ejb>
+  </module>
+</application>
